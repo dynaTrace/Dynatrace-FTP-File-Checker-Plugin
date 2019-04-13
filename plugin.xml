@@ -6,16 +6,16 @@
     <information>
       <category value="" />
       <displayname value="FTP File Checker" />
-      <description value="This plugin checks for the existence of a specified file on a specified FTP Server and returns a 0 if it's not found, a 1 if it's found. " />
+      <description value="This plugin checks for the existence of a specified file on a specified FTP Server and returns a 0 if it's not found, a 1 if it's found. Version 1.0.3 adds directory check - if the specified directory exists, a 1 is returned. If not, a 0 is returned for both the file and the directory" />
       <supportlevel value="unsupported" />
     </information>
     <configuration>
       <property key="host" label="FTP Server HostName" type="string" description="The hostname of the FTP Server.  &#xA;" default="localhost" multiline="false" />
       <property key="port" label="FTP Server Port" type="long" description="Port number used to connect to FTP Server.&#xA;Port 21 is the default.&#xA;" default="21" />
-      <property key="username" label="FTP Server Username" type="string" description="My property description ..." default="default" multiline="false" />
-      <property key="password" label="FTP Server password" type="password" description="My property description ..." default="" />
+      <property key="username" label="FTP Server Username" type="string" description="Username for FTP" default="default" multiline="false" />
+      <property key="password" label="FTP Server password" type="password" description="Password for FTP" default="" />
       <property key="directory" label="Directory" type="string" description="This is the directory path of where the file is located.  This path is relative to the home directory of the specified account" default="" multiline="false" />
-      <property key="filename" label="Filename" type="string" description="My property description ..." default="FileToCheck.txt" multiline="false" />
+      <property key="filename" label="Filename" type="string" description="Filename of the file you want to check" default="FileToCheck.txt" multiline="false" />
     </configuration>
   </extension>
   <extension point="com.dynatrace.diagnostics.pdk.monitor" id="com.dynatrace.FTPFileChecker.monitor" name="FTP File Checker">
@@ -23,8 +23,10 @@
   </extension>
   <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.FTPFileChecker.monitor.metricgroup1" name="FTPFileCheckerMetrics">
     <metricgroup monitorid="com.dynatrace.FTPFileChecker.monitor">
-      <metric defaultrate="purepath" name="FileExists" unit="occurrences" description="My metric description ..." />
+      <metric defaultrate="purepath" name="FileExists" unit="occurrences" description="Does the specified file exist on the FTP server?" />
+      <metric defaultrate="purepath" name="DirectoryExists" unit="occurrences" description="Does the given directory exist on the FTP server?" />
+      <metric defaultrate="purepath" name="ConnectionSuccess" unit="number" description="If the monitor was able to connect successfully it will be 1, otherwise it will be 0" />
+      <metric defaultrate="purepath" name="LoginSuccess" unit="number" description="If the login was successfull it will return 1, otherwise it will return 0" />
     </metricgroup>
   </extension>
 </plugin>
-
